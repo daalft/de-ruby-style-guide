@@ -1,4 +1,4 @@
-# Prelude
+# Ouvertüre
 
 > Role models are important. <br>
 > -- Officer Alex J. Murphy / RoboCop
@@ -25,7 +25,7 @@ Ruby developer out there.
 By the way, if you're into Rails you might want to check out the complementary
 [Ruby on Rails Style Guide][rails-style-guide].
 
-# The Ruby Style Guide
+# Ruby: Anleitung für den Codestil
 
 This Ruby style guide recommends best practices so that real-world Ruby
 programmers can write code that can be maintained by other real-world Ruby
@@ -66,18 +66,20 @@ style guide.
 
 Translations of the guide are available in the following languages:
 
-* [Chinese Simplified](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhCN.md)
-* [Chinese Traditional](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhTW.md)
-* [French](https://github.com/porecreat/ruby-style-guide/blob/master/README-frFR.md)
-* [German](https://github.com/arbox/de-ruby-style-guide/blob/master/README-deDE.md)
-* [Japanese](https://github.com/fortissimo1997/ruby-style-guide/blob/japanese/README.ja.md)
-* [Korean](https://github.com/dalzony/ruby-style-guide/blob/master/README-koKR.md)
-* [Portuguese](https://github.com/rubensmabueno/ruby-style-guide/blob/master/README-PT-BR.md)
-* [Russian](https://github.com/arbox/ruby-style-guide/blob/master/README-ruRU.md)
-* [Spanish](https://github.com/alemohamad/ruby-style-guide/blob/master/README-esLA.md)
-* [Vietnamese](https://github.com/scrum2b/ruby-style-guide/blob/master/README-viVN.md)
 
-## Table of Contents
+* [Chinesisch (traditionelle Schrift)](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhTW.md)
+* [Chinesisch (vereinfachte Schrift)](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhCN.md)
+* [Deutsch (aktuelles Dokument)](https://github.com/arbox/de-ruby-style-guide/blob/master/README-deDE.md)
+* [Englisch (Ursprungsversion)](https://github.com/bbatsov/ruby-style-guide/blob/master/README.md)
+* [Französisch](https://github.com/porecreat/ruby-style-guide/blob/master/README-frFR.md)
+* [Japanisch](https://github.com/fortissimo1997/ruby-style-guide/blob/japanese/README.ja.md)
+* [Koreanisch](https://github.com/dalzony/ruby-style-guide/blob/master/README-koKR.md)
+* [Portugiesisch](https://github.com/rubensmabueno/ruby-style-guide/blob/master/README-PT-BR.md)
+* [Russisch](https://github.com/arbox/ruby-style-guide/blob/master/README-ruRU.md)
+* [Spanisch](https://github.com/alemohamad/ruby-style-guide/blob/master/README-esLA.md)
+* [Vietnamesisch](https://github.com/scrum2b/ruby-style-guide/blob/master/README-viVN.md)
+
+## Inhaltsverzeichnis
 
 * [Source Code Layout](#source-code-layout)
 * [Syntax](#syntax)
