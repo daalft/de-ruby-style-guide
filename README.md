@@ -1,7 +1,7 @@
 # Ruby: Anleitung für den Codestil
 
 Diese Anleitung vermittelt fortgeschrittene Tipps. Damit kann jeder Ruby-Entwickler
-solchen Code schreiben, der von anderen Etwicklern ohne Schwierigkeiten verstanden
+solchen Code schreiben, der von anderen Entwicklern ohne Schwierigkeiten verstanden
 und weiterentwickelt werden kann.
 
 Sie können die [Anleitung][german] auf Deutsch lesen.
