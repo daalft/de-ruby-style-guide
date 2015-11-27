@@ -1,4 +1,4 @@
-# Prelude
+# Ouvertüre
 
 > Role models are important. <br>
 > -- Officer Alex J. Murphy / RoboCop
@@ -25,7 +25,7 @@ Ruby developer out there.
 By the way, if you're into Rails you might want to check out the complementary
 [Ruby on Rails Style Guide][rails-style-guide].
 
-# The Ruby Style Guide
+# Ruby: Anleitung für den Codestil
 
 This Ruby style guide recommends best practices so that real-world Ruby
 programmers can write code that can be maintained by other real-world Ruby
@@ -66,18 +66,20 @@ style guide.
 
 Translations of the guide are available in the following languages:
 
-* [Chinese Simplified](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhCN.md)
-* [Chinese Traditional](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhTW.md)
-* [French](https://github.com/porecreat/ruby-style-guide/blob/master/README-frFR.md)
-* [German](https://github.com/arbox/ruby-style-guide/blob/master/README-deDE.md)
-* [Japanese](https://github.com/fortissimo1997/ruby-style-guide/blob/japanese/README.ja.md)
-* [Korean](https://github.com/dalzony/ruby-style-guide/blob/master/README-koKR.md)
-* [Portuguese](https://github.com/rubensmabueno/ruby-style-guide/blob/master/README-PT-BR.md)
-* [Russian](https://github.com/arbox/ruby-style-guide/blob/master/README-ruRU.md)
-* [Spanish](https://github.com/alemohamad/ruby-style-guide/blob/master/README-esLA.md)
-* [Vietnamese](https://github.com/scrum2b/ruby-style-guide/blob/master/README-viVN.md)
 
-## Table of Contents
+* [Chinesisch (traditionelle Schrift)](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhTW.md)
+* [Chinesisch (vereinfachte Schrift)](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhCN.md)
+* [Deutsch (aktuelles Dokument)](https://github.com/arbox/de-ruby-style-guide/blob/master/README-deDE.md)
+* [Englisch (Ursprungsversion)](https://github.com/bbatsov/ruby-style-guide/blob/master/README.md)
+* [Französisch](https://github.com/porecreat/ruby-style-guide/blob/master/README-frFR.md)
+* [Japanisch](https://github.com/fortissimo1997/ruby-style-guide/blob/japanese/README.ja.md)
+* [Koreanisch](https://github.com/dalzony/ruby-style-guide/blob/master/README-koKR.md)
+* [Portugiesisch](https://github.com/rubensmabueno/ruby-style-guide/blob/master/README-PT-BR.md)
+* [Russisch](https://github.com/arbox/ruby-style-guide/blob/master/README-ruRU.md)
+* [Spanisch](https://github.com/alemohamad/ruby-style-guide/blob/master/README-esLA.md)
+* [Vietnamesisch](https://github.com/scrum2b/ruby-style-guide/blob/master/README-viVN.md)
+
+## Inhaltsverzeichnis
 
 * [Source Code Layout](#source-code-layout)
 * [Syntax](#syntax)
@@ -248,6 +250,11 @@ Translations of the guide are available in the following languages:
 <sup>[[link](#no-spaces-braces)]</sup>
 
   ```Ruby
+  # bad
+  some( arg ).other
+  [ 1, 2, 3 ].size
+
+  # good
   some(arg).other
   [1, 2, 3].size
   ```
@@ -634,6 +641,74 @@ Translations of the guide are available in the following languages:
      # body omitted
    end
    ```
+
+* <a name="optional-arguments"></a>
+    Define optional arguments at the end of the list of arguments.
+    Ruby has some unexpected results when calling methods that have
+    optional arguments at the front of the list.
+<sup>[[link](#optional-arguments)]</sup>
+
+  ```Ruby
+  # bad
+  def some_method(a = 1, b = 2, c, d)
+    puts "#{a}, #{b}, #{c}, #{d}"
+  end
+
+  some_method('w', 'x') # => '1, 2, w, x'
+  some_method('w', 'x', 'y') # => 'w, 2, x, y'
+  some_method('w', 'x', 'y', 'z') # => 'w, x, y, z'
+
+  # good
+  def some_method(c, d, a = 1, b = 2)
+    puts "#{a}, #{b}, #{c}, #{d}"
+  end
+
+  some_method('w', 'x') # => 'w, x, 1, 2'
+  some_method('w', 'x', 'y') # => 'w, x, y, 2'
+  some_method('w', 'x', 'y', 'z') # => 'w, x, y, z'
+  ```
+
+* <a name="parallel-assignment"></a>
+    Avoid the use of parallel assignment for defining variables. Parallel
+    assignment is allowed when it is the return of a method call, used with
+    the splat operator, or when used to swap variable assignment. Parallel
+    assignment is less readable than separate assignment.
+<sup>[[link](#parallel-assignment)]</sup>
+
+  ```Ruby
+  # bad
+  a, b, c, d = 'foo', 'bar', 'baz', 'foobar'
+
+  # good
+  a = 'foo'
+  b = 'bar'
+  c = 'baz'
+  d = 'foobar'
+
+  # good - swapping variable assignment
+  # Swapping variable assignment is a special case because it will allow you to
+  # swap the values that are assigned to each variable.
+  a = 'foo'
+  b = 'bar'
+
+  a, b = b, a
+  puts a # => 'bar'
+  puts b # => 'foo'
+
+  # good - method return
+  def multi_return
+    [1, 2]
+  end
+
+  first, second = multi_return
+
+  # good - use with splat
+  first, *list = [1,2,3,4]
+
+  hello_array = *"Hello"
+
+  a = *(1..3)
+  ```
 
 * <a name="no-for-loops"></a>
     Do not use `for`, unless you know exactly why. Most of the time iterators
@@ -1464,6 +1539,32 @@ condition](#safe-assignment-in-condition).
   end
   ```
 
+* <a name="stabby-lambda-with-args"></a>
+Don't omit the parameter parentheses when defining a stabby lambda with
+parameters.
+<sup>[[link](#stabby-lambda-with-args)]</sup>
+
+  ```Ruby
+  # bad
+  l = ->x, y { something(x, y) }
+
+  # good
+  l = ->(x, y) { something(x, y) }
+  ```
+
+* <a name="stabby-lambda-no-args"></a>
+Omit the parameter parentheses when defining a stabby lambda with
+no parameters.
+<sup>[[link](#stabby-lambda-no-args)]</sup>
+
+  ```Ruby
+  # bad
+  l = ->() { something }
+
+  # good
+  l = -> { something }
+  ```
+
 * <a name="proc"></a>
   Prefer `proc` over `Proc.new`.
 <sup>[[link](#proc)]</sup>
@@ -1857,12 +1958,20 @@ condition](#safe-assignment-in-condition).
     ...
   end
 
+  class XmlSomething
+    ...
+  end
+
   # good
   class SomeClass
     ...
   end
 
   class SomeXML
+    ...
+  end
+
+  class XMLSomething
     ...
   end
   ```
@@ -2462,10 +2571,10 @@ condition](#safe-assignment-in-condition).
   end
   ```
 
-* <a name="def-self-singletons"></a>
-  Use `def self.method` to define singleton methods. This makes the code
+* <a name="def-self-class-methods"></a>
+  Use `def self.method` to define class methods. This makes the code
   easier to refactor since the class name is not repeated.
-<sup>[[link](#def-self-singletons)]</sup>
+<sup>[[link](#def-self-class-methods)]</sup>
 
   ```Ruby
   class TestClass
@@ -2480,7 +2589,7 @@ condition](#safe-assignment-in-condition).
     end
 
     # Also possible and convenient when you
-    # have to define many singleton methods.
+    # have to define many class methods.
     class << self
       def first_method
         # body omitted
@@ -2749,7 +2858,6 @@ condition](#safe-assignment-in-condition).
   # also good
   begin
     # an exception occurs here
-
   rescue StandardError => e
     # exception handling
   end
@@ -2764,18 +2872,18 @@ condition](#safe-assignment-in-condition).
   # bad
   begin
     # some code
-  rescue Exception => e
-    # some handling
   rescue StandardError => e
+    # some handling
+  rescue IOError => e
     # some handling that will never be executed
   end
 
   # good
   begin
     # some code
-  rescue StandardError => e
+  rescue IOError => e
     # some handling
-  rescue Exception => e
+  rescue StandardError => e
     # some handling
   end
   ```
@@ -2992,18 +3100,19 @@ resource cleanup when possible.
   ```
 
 * <a name="use-hash-blocks"></a>
-  Prefer the use of the block instead of the default value in `Hash#fetch` if the code that has to be evaluated may have side effects or be expensive.
-<sup>[[link](#use-hash-blocks)]</sup>
+  Prefer the use of the block instead of the default value in `Hash#fetch`
+  if the code that has to be evaluated may have side effects or be expensive.
+  <sup>[[link](#use-hash-blocks)]</sup>
 
   ```Ruby
   batman = { name: 'Bruce Wayne' }
 
   # bad - if we use the default value, we eager evaluate it
   # so it can slow the program down if done multiple times
-  batman.fetch(:powers, get_batman_powers) # get_batman_powers is an expensive call
+  batman.fetch(:powers, obtain_batman_powers) # obtain_batman_powers is an expensive call
 
   # good - blocks are lazy evaluated, so only triggered in case of KeyError exception
-  batman.fetch(:powers) { get_batman_powers }
+  batman.fetch(:powers) { obtain_batman_powers }
   ```
 
 * <a name="hash-values-at"></a>
@@ -3084,7 +3193,7 @@ resource cleanup when possible.
 
 * <a name="string-interpolation"></a>
   With interpolated expressions, there should be no padded-spacing inside the braces.
-<sup>[[link](#pad-string-interpolation)]</sup>
+<sup>[[link](#string-interpolation)]</sup>
 
   ```Ruby
   # bad
@@ -3193,6 +3302,14 @@ resource cleanup when possible.
 <sup>[[link](#concat-strings)]</sup>
 
   ```Ruby
+  # bad
+  html = ''
+  html += '<h1>Page title</h1>'
+
+  paragraphs.each do |paragraph|
+    html += "<p>#{paragraph}</p>"
+  end
+
   # good and also fast
   html = ''
   html << '<h1>Page title</h1>'
@@ -3257,12 +3374,15 @@ resource cleanup when possible.
   ```
 
 * <a name="non-capturing-regexp"></a>
-  Use non-capturing groups when you don't use captured result of parentheses.
+  Use non-capturing groups when you don't use the captured result.
 <sup>[[link](#non-capturing-regexp)]</sup>
 
   ```Ruby
-  /(first|second)/   # bad
-  /(?:first|second)/ # good
+  # bad
+  /(first|second)/
+
+  # good
+  /(?:first|second)/
   ```
 
 * <a name="no-perl-regexp-last-matchers"></a>
@@ -3331,8 +3451,14 @@ resource cleanup when possible.
   ```
 
 * <a name="gsub-blocks"></a>
-  For complex replacements `sub`/`gsub` can be used with block or hash.
+  For complex replacements `sub`/`gsub` can be used with a block or a hash.
 <sup>[[link](#gsub-blocks)]</sup>
+
+  ```Ruby
+  words = 'foo bar'
+  words.sub(/f/, 'f' => 'F') # => 'Foo bar'
+  words.gsub(/\w+/) { |word| word.capitalize } # => 'Foo Bar'
+  ```
 
 ## Percent Literals
 
@@ -3375,6 +3501,7 @@ resource cleanup when possible.
   name = 'Bruce Wayne'
   time = "8 o'clock"
   question = '"What did you say?"'
+  quote = %q(<p class='quote'>"What did you say?"</p>)
   ```
 
 * <a name="percent-r"></a>
@@ -3587,7 +3714,7 @@ resource cleanup when possible.
 
 ## Tools
 
-Here's some tools to help you automatically check Ruby code against
+Here are some tools to help you automatically check Ruby code against
 this guide.
 
 ### RuboCop
